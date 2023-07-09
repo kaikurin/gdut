@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script type="text/javascript" src="static/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.bundle.min.js"></script>
+	<title>Admin Login</title>
+</head>
+<body class="bg-theme">
+    <div class="col-md-4 offset-md-4">
+        <h3 class="mb-0 text-uppercase"><i class="bi bi-book"></i> 图书管理系统登陆界面</h3>
+        <hr>
+        <div class="login-wrapper">
+            <div class="card-body p-5">
+                <div class="card-title text-center">
+                    <h4><i class="bi bi-person-circle"></i> 账号登录</h4>
+                </div>
+                <hr>
+                <form class="row g-3">
+                    <div class="col-12">
+                        <label for="username" class="form-label">用户名</label>
+                        <div class="input-group input-group-lg"> <span class="input-group-text"><i class="bi bi-person-video"></i></span>
+                            <input type="text" class="form-control border-start-0" id="username" placeholder="请输入用户名">
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="col-12">
+                        <label for="userpassword" class="form-label">密码</label>
+                        <div class="input-group input-group-lg"> <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                            <input type="password" class="form-control border-start-0" id="userpassword" placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check">
+                            <label class="form-check-label" for="check">自动登录</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-end">	<a href="javascript:;">忘记密码？</a>
+                    </div>
+                    <div class="col-12">
+                        <div class="d-grid">
+                            <button type="submit" class="btn  btn-primary btn-lg px-5">登录</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-12 text-center">
+                        <p class="mb-0">没有账号：</p>
+                    </div>
+                    <div class="col-8 offset-md-2">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">注册</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

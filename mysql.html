@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style>
+    pre {
+    color: #333;
+    background-color: #f7f7f7;
+    padding: 10px;
+    margin: 10px;
+    font-size: 14px;
+    font-family: "Courier monospace;
+  }
+  pre {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+    <h4>安装配置MySQL</h4>
+    <ol id="ZH-CN_TOPIC_0119834655__ol16300048171910">
+     <li id="ZH-CN_TOPIC_0119834655__li102971482194"><span>使用<b><span class="cmdname" id="ZH-CN_TOPIC_0119834655__cmdname1044911913210">root</span></b>用户执行以下命令添加yum源。</span><p></p><div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen1658111494324">rpm -Uvh http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div> <p></p></li>
+     <li id="ZH-CN_TOPIC_0119834655__li72889393416"><span>安装MySQL。</span><p></p><div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen8421193123413">yum -y install mysql-community-server --nogpgcheck</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div> <p></p></li>
+     <li id="ZH-CN_TOPIC_0119834655__li1598512406816"><span>依次执行以下命令，启动MySQL服务并设置开机自启动。</span><p></p><div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen198674014812">systemctl start mysqld
+  systemctl enable mysqld</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div> <p></p></li>
+     <li id="ZH-CN_TOPIC_0119834655__li153776297614"><span>执行以下命令，获取安装MySQL时自动设置的root用户密码。</span><p></p><div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen63063387614">grep 'temporary password' /var/log/mysqld.log</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div>
+      <div class="p" id="ZH-CN_TOPIC_0119834655__p134217343419">
+       回显如下类似信息，其中<span class="parmvalue" id="ZH-CN_TOPIC_0119834655__parmvalue12644145117711">“(n?K7jP#cirM”</span>即为临时密码。
+       <div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen15421163103411">2019-05-09T11:29:42.365419Z 1 [Note] A temporary password is generated for root@localhost: <strong id="ZH-CN_TOPIC_0119834655__b1346372476">(n?K7jP#cirM</strong></pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div>
+      </div> <p></p></li>
+     <li id="ZH-CN_TOPIC_0119834655__li139622011115"><span>执行以下命令加固MySQL。</span><p></p><div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen178305371119">mysql_secure_installation</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div> <p id="ZH-CN_TOPIC_0119834655__p38108613126">按照回显提示信息进行操作，具体操作如粗体所示：</p> <div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen18422238346">Securing the MySQL server deployment.
+  
+  Enter password for user root:    <strong id="ZH-CN_TOPIC_0119834655__b77151834175310">#输入上一步骤中获取的安装MySQL时自动设置的root用户密码</strong>
+  The existing password for the user account root has expired. Please set a new password.
+  
+  New password:                    <strong id="ZH-CN_TOPIC_0119834655__b1571103717538">#设置root用户密码</strong>
+  
+  Re-enter new password:           <strong id="ZH-CN_TOPIC_0119834655__b14428153913535">#再次输入密码</strong>
+  The 'validate_password' plugin is installed on the server.
+  The subsequent steps will run with the existing configuration of the plugin.
+  Using existing password for root.
+  
+  Estimated strength of the password: 100
+  Change the password for root ? ((Press y|Y for Yes, any other key for No) : Y  <strong id="ZH-CN_TOPIC_0119834655__b893916443530"> #是否更改root用户密码，输入Y</strong>
+  
+  New password:    <strong id="ZH-CN_TOPIC_0119834655__b073645115539">#输入密码，长度为8至30个字符，须同时包含大小写英文字母、数字和特殊符号。特殊符号可以是()` <font style="font-size:8pt" face="Courier New">~</font>!@#$%^&amp;*-+=|{}[]:;‘&lt;&gt;,.?/</strong>
+  Re-enter new password:    <strong id="ZH-CN_TOPIC_0119834655__b6751115411532">#再次输入密码</strong>
+  Estimated strength of the password: 100
+  Do you wish to continue with the password provided?(Press y|Y for Yes, any other key for No) : Y    <strong id="ZH-CN_TOPIC_0119834655__b16625201175416">#输入Y</strong>
+  By default, a MySQL installation has an anonymous user, allowing anyone to log into MySQL without having to have a user account created for them. This is intended only for testing, and to make the installation go a bit smoother. You should remove them before moving into a production environment.
+  
+  Remove anonymous users? (Press y|Y for Yes, any other key for No) : Y   <strong id="ZH-CN_TOPIC_0119834655__b99933317546">#是否删除匿名用户，输入Y</strong>
+  Success.
+  
+  Normally, root should only be allowed to connect from 'localhost'. This ensures that someone cannot guess at the root password from the network.
+  
+  Disallow root login remotely? (Press y|Y for Yes, any other key for No) : Y   <strong id="ZH-CN_TOPIC_0119834655__b121289713548">#禁止root远程登录，输入Y</strong>
+  Success.
+  
+  By default, MySQL comes with a database named 'test' that anyone can access. This is also intended only for testing, and should be removed before moving into a production environment.
+  
+  Remove test database and access to it? (Press y|Y for Yes, any other key for No) : Y   <strong id="ZH-CN_TOPIC_0119834655__b247401017549">#是否删除test库和对它的访问权限，输入Y</strong>
+   - Dropping test database...
+  Success.
+  
+   - Removing privileges on test database...
+  Success.
+  
+  Reloading the privilege tables will ensure that all changes
+  made so far will take effect immediately.
+  
+  Reload privilege tables now? (Press y|Y for Yes, any other key for No) : Y  <strong id="ZH-CN_TOPIC_0119834655__b96485157543"> #是否重新加载授权表，输入Y</strong>
+  Success.
+  
+  All done!</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div> <p></p></li>
+     <li id="ZH-CN_TOPIC_0119834655__li5998161255610"><span>以root用户登录MySQL数据库。</span><p></p><div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen663312423563">mysql -u root -p</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div> <p></p></li>
+     <li id="ZH-CN_TOPIC_0119834655__li5493202414579"><span>创建一个新的数据库，其中<span class="parmvalue" id="ZH-CN_TOPIC_0119834655__parmvalue1986651914116">“magento”</span>为自定义的数据库名称。</span><p></p><div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen15438145315712">CREATE DATABASE <em id="ZH-CN_TOPIC_0119834655__i176319586574">magento</em>;</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div> <p></p></li>
+     <li id="ZH-CN_TOPIC_0119834655__li88148436572"><span>执行以下命令，为数据库创建用户并为用户分配数据库的完全访问权限。</span><p></p><div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen10201740145912">GRANT ALL ON <em id="ZH-CN_TOPIC_0119834655__i737674585918">magento</em>.* TO <em id="ZH-CN_TOPIC_0119834655__i1537634535920">magentouser</em>@localhost IDENTIFIED BY '<em id="ZH-CN_TOPIC_0119834655__i173761645185912">BLOck@123</em>' ;</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div> <p id="ZH-CN_TOPIC_0119834655__p8902158109">其中，<span class="parmvalue" id="ZH-CN_TOPIC_0119834655__parmvalue18770265118">“magento”</span>为上一步骤中创建的数据库名，<span class="parmvalue" id="ZH-CN_TOPIC_0119834655__parmvalue17474736118">“magentouser”</span>为新建的数据库用户名，<span class="parmvalue" id="ZH-CN_TOPIC_0119834655__parmvalue13981154706">“BLOck@123”</span>为对应的帐户密码，可以自行设置。</p> <p></p></li>
+     <li id="ZH-CN_TOPIC_0119834655__li52571530115917"><span>执行以下命令，退出MySQL命令行。</span><p></p><div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen993910181023">exit</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div> <p></p></li>
+     <li id="ZH-CN_TOPIC_0119834655__li1594812121922"><span>（可选）依次执行以下步骤，验证数据库和用户是否已成功创建，并退出MySQL命令行。</span><p></p>
+      <ol id="ZH-CN_TOPIC_0119834655__ol1139304314319" type="a">
+       <li id="ZH-CN_TOPIC_0119834655__li739315439318">以新建的数据库用户<span class="parmvalue" id="ZH-CN_TOPIC_0119834655__parmvalue12744173916315">“magentouser”</span>登录MySQL命令行。<div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen16744439331">mysql -u <em id="ZH-CN_TOPIC_0119834655__i1574415393313">magentouser</em> -p</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div></li>
+       <li id="ZH-CN_TOPIC_0119834655__li44091155835">查看数据库。<div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen334019483313">SHOW DATABASES;</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div> <p id="ZH-CN_TOPIC_0119834655__p132310444817">回显如下，<span class="parmvalue" id="ZH-CN_TOPIC_0119834655__parmvalue1565913528811">“magento”</span>即为新建的数据库，说明数据库已成功创建。</p> <div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen67861511773">+--------------------+
+  | Database           |
+  +--------------------+
+  | information_schema |
+  | magento            |
+  +--------------------+
+  2 rows in set (0.00 sec)</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div></li>
+       <li id="ZH-CN_TOPIC_0119834655__li91680711412">执行以下命令，退出MySQL命令行。<div class="pre-box"><pre class="screen ctnc" id="ZH-CN_TOPIC_0119834655__screen1745510135411">exit</pre><button class="btnCP" style="outline:none;border:none;background-color:transparent;"><div class="btnCP-tip"></div></button><div class="btnCC"><div class="btnCP-tip"></div></div></div></li>
+      </ol> <p></p></li>
+    </ol>
+   </div>
+
+</body>
+</html>
